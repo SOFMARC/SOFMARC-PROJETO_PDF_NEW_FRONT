@@ -1,0 +1,25 @@
+name: Deploy para VPS
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
+
+      - name: Atualizar código na VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: 20.1.155.68
+          username: tsilva
+          password: N78mN4ykxHuskgx
+          script: |
+            cd /ProjetoPdf-Front
+            git pull origin master
+            # Outros comandos necessários para atualizar o código na VPS
