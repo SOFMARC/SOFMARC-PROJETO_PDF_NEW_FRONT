@@ -20,6 +20,6 @@ jobs:
           username: tsilva
           password: N78mN4ykxHuskgx
           script: |
-            cd /PROJETO_PDF_NEW_FRONT
+            cd /home/tsilva/PROJETO_PDF_NEW_FRONT
             git pull origin master
             # Outros comandos necessários para atualizar o código na VPS
