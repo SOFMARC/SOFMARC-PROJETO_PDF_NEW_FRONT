@@ -22,5 +22,4 @@ jobs:
           script: |
             cd /ProjetoPdf-Front
             git pull origin master
-            npm ci --only=prod
             # Outros comandos necessários para atualizar o código na VPS
