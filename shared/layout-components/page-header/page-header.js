@@ -24,6 +24,10 @@ const PageHeader = (props) => {
 	const [files, setFiles] = useState([]);
   const [filesIds, setFilesIds] = useState([]);
   const [token, setToken] = useState('')
+  const [select, setSelect] = useState('')
+  
+  const [perid, setPerId] = useState('')
+
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,7 +35,7 @@ const PageHeader = (props) => {
 
   const [errLog, setErrLog] = useState(false);
 
-
+  const status = [{per_id: 182, tipo: "Empresa"}, {per_id: 183, tipo: "Administrador"}, {per_id: 184, tipo: "Operador"}]
 
   useEffect(() =>{
     getToken()
@@ -116,9 +120,8 @@ const PageHeader = (props) => {
     //console.log("users:", user)
     //console.log("cadastro user page:", name, email, password)
     
-    let data = {id_cliente: user.id_client, name: name, empresa:user.empresa, email:email, password:password}
+    let data = {id_cliente: user.id_client, per_id: perid, name: name, email:email, password:password}
     
-
     //console.log("users:", data)
 
     const res = await cadastro_permission(data)
@@ -180,7 +183,7 @@ const PageHeader = (props) => {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     className="form-control"
-                                    placeholder="Enter your username"
+                                    placeholder="Insira o nome"
                                     type="text"
                                   />
                                 </div>
@@ -189,7 +192,7 @@ const PageHeader = (props) => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="form-control"
-                                    placeholder="Enter Your Email"
+                                    placeholder="Insiara o email"
                                     type="email"
                                   />
                                 </div>
@@ -198,11 +201,19 @@ const PageHeader = (props) => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="form-control"
-                                    placeholder="Enter Your Password"
+                                    placeholder="Insira a senha"
                                     type="password"
                                   />
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group flex items-center justify-center mt-4">
+                                  <h6 className="main-content-label mb-1">Insira um novo membro: { select }</h6>
+                                </div>
+                                <div style={{marginTop: -10}} className="form-group flex">
+                                  {status.map((res) => (
+                                   <div style={{cursor: 'pointer', borderRadius: 5, marginTop: 12}} onClick={()=> [setSelect(res.tipo), setPerId(res.per_id)]} className='flex items-center justify-center w-full border border-zinc-200  p-2'>
+                                    <span style={{fontWeight: 'normal', marginLeft: 5, color: '#a5b1c2'}}>{res.tipo}</span>
+                                   </div>
+                                  ))}
                                 </div>
                                 <Button onClick={()=> handleCadastro()} className="btn ripple btn-main-primary">Cadastrar usuario</Button>
                               </div>
