@@ -22,4 +22,17 @@ jobs:
           script: |
             cd /ProjetoPdf-Front
             git pull origin master
-            # Outros comandos necessários para atualizar o código na VPS
+            #!/bin/bash
+
+            # Instale as dependências
+            npm install
+
+            # Verifique se há um processo do forever em execução na porta 3000
+            FOREVER_PROCESS=$(forever list | grep ":3000")
+
+            if [ -n "$FOREVER_PROCESS" ]; then
+              # Se houver um processo em execução na porta 3000, pare-o
+              forever stop "$FOREVER_PROCESS"
+            fi
+            
+            forever start -c "npm start -- -p 3000" .
