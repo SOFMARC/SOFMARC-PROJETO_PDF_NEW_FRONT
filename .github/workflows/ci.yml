@@ -23,4 +23,5 @@ jobs:
             cd /home/tsilva/frontend/SOFMARC-PROJETO_PDF_NEW_FRONT
             git pull origin dev
             #!/bin/bash
-            npm run dev 
+            npm i --force
+            npm run dev
