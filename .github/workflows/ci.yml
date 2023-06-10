@@ -25,7 +25,7 @@ jobs:
             #!/bin/bash
 
             # Instale as dependências
-            npm install
+            npm install --force
 
             # Verifique se há um processo do forever em execução na porta 3000asd
             FOREVER_PROCESS=$(forever list | grep ":3000")
