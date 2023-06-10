@@ -16,10 +16,10 @@ jobs:
       - name: Atualizar código na VPS
         uses: appleboy/ssh-action@master
         with:
-          host: 20.1.155.68
+          host: 20.226.72.133
           username: tsilva
           password: N78mN4ykxHuskgx
           script: |
-            cd /home/tsilva/PROJETO_PDF_NEW_FRONT
+            cd /home/tsilva/frontend/PROJETO_PDF_NEW_FRONT
             git pull origin master
             # Outros comandos necessários para atualizar o código na VPS
