@@ -3,7 +3,7 @@ name: Deploy para VPS v1as
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   deploy:
