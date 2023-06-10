@@ -22,14 +22,4 @@ jobs:
           script: |
             cd /home/tsilva/frontend/PROJETO_PDF_NEW_FRONT
             git pull origin master
-            #!/bin/bash
-
-            # Verifique se há um processo do forever em execução na porta 3000asd
-            FOREVER_PROCESS=$(forever list | grep ":3000")
-
-            if [ -n "$FOREVER_PROCESS" ]; then
-              # Se houver um processo em execução na porta 3000, pare-o
-              forever stop "$FOREVER_PROCESS"
-            fi
             
-            forever start -c "npm start -- -p 3000" .
