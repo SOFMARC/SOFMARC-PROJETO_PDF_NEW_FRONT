@@ -24,9 +24,6 @@ jobs:
             git pull origin master
             #!/bin/bash
 
-            # Instale as dependências
-            npm install --force
-
             # Verifique se há um processo do forever em execução na porta 3000asd
             FOREVER_PROCESS=$(forever list | grep ":3000")
 
