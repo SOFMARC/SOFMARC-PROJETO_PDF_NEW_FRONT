@@ -23,6 +23,4 @@ jobs:
             cd /home/tsilva/frontend/SOFMARC-PROJETO_PDF_NEW_FRONT
             git pull origin dev
             #!/bin/bash
-            npm i --force
-            npm install --force react react-dom
             npm run dev
