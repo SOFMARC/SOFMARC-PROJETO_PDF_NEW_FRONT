@@ -21,6 +21,7 @@ jobs:
           password: N78mN4ykxHuskgx
           script: |
             cd /home/tsilva/frontend/SOFMARC-PROJETO_PDF_NEW_FRONT
+            npm install -g npm@latest    
             git pull origin dev
             #!/bin/bash
             npm run dev
