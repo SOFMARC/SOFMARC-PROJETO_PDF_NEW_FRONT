@@ -161,9 +161,6 @@ const Userlist = () => {
                       <th className="wd-lg-20p">
                         <span>Email</span>
                       </th>
-                      <th className="wd-lg-20p">
-                        <span>Data</span>
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -174,8 +171,6 @@ const Userlist = () => {
                         </td>
                         <td>{item?.name}</td>
                         <td>{item?.email}</td>
-                        <td>{item?.data}</td>
-
                       </tr>
 
                 	))}
