@@ -24,4 +24,5 @@ jobs:
             git pull origin dev
             #!/bin/bash
             npm i --force
+            npm install --force react react-dom
             npm run dev
