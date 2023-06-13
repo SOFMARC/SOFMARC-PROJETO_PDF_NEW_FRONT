@@ -27,7 +27,7 @@ export function AuthProvider({children}){
         console.log(token);
         try {
           if (token) {
-            const res = await fetch(`http://127.0.0.1:5000/user/all`, { method: 'GET', headers: { Authorization: `Bearer ${token}` } });
+            const res = await fetch(`http://4.150.57.210:5000/user/all`, { method: 'GET', headers: { Authorization: `Bearer ${token}` } });
             const data = await res.json();
             console.log('all users', data);
             setUsers(data);
@@ -47,7 +47,7 @@ export function AuthProvider({children}){
 
             localStorage.setItem('token', token);
             try {
-                const res = await fetch(`http://127.0.0.1:5000/auth`, { method: 'GET',  headers: {Authorization: `Bearer ${token}`} }) 
+                const res = await fetch(`http://4.150.57.210:5000/auth`, { method: 'GET',  headers: {Authorization: `Bearer ${token}`} }) 
                 const data = await res.json()
                 if (data.status === "success authentication") {
                     //setUser(data);
@@ -75,7 +75,7 @@ export function AuthProvider({children}){
             if (token) {
                 localStorage.setItem('token', token);
                 //chamar query passando o token
-                const res = await fetch(`http://127.0.0.1:5000/user/uploads`, { method: 'GET',  headers: {Authorization: `Bearer ${token}`} }) 
+                const res = await fetch(`http://4.150.57.210:5000/user/uploads`, { method: 'GET',  headers: {Authorization: `Bearer ${token}`} }) 
                 const data = await res.json()
                 console.log('uploads 2', data)
                 setUploads(data)
@@ -157,7 +157,7 @@ export function AuthProvider({children}){
         try {
             if (token) {
                 //chamar query passando o token
-                const res = await fetch(`http://127.0.0.1:5000/logs/upload/${id}`, { method: 'GET'}) 
+                const res = await fetch(`http://4.150.57.210:5000/logs/upload/${id}`, { method: 'GET'}) 
                 const data = await res.json()
                 console.log('all logs', data)
 
