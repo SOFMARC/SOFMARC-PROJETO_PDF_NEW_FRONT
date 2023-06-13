@@ -27,9 +27,8 @@ const Home = ()=>{
 
 
   const [data, setData] = useState({
-  "email": "adminnextjs@gmail.com",
-  "password": "1234567890",
-
+  "email": "",
+  "password": "",
   })
   const { email, password, name, empresa } = data;
   const changeHandler = (e) => {
