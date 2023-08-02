@@ -26,6 +26,7 @@
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "exceljs": "^4.3.0",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "material-ui-dropzone": "^3.5.0",

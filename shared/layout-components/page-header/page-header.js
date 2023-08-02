@@ -16,8 +16,9 @@ import Router from "next/router";
 import { AuthContext } from '../../../context/AuthContext';
 import { cadastro_permission } from '../../../services/database';
 import useSWR from 'swr';
+import ExcelJS from 'exceljs';
 
-const PageHeader = (props) => {
+const PageHeader = (props, handle) => {
   const [show, setShow] = useState(false);
   const [Basic, setBasic] = useState(false) 
   const [loading, setLoading] = useState(false) 
@@ -136,6 +137,57 @@ const PageHeader = (props) => {
     }
   }
 
+
+  const createExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Sheet 1');
+    
+    // Escreva dados na planilha
+    sheet.addRow(['id', 'Nome do prestador', 'CNPJ', 'Nr da NF', 'Cod.Seviço', 'Emissão da NF', 'Mun.Emissão', 'Mun.Prestação', 'Valor dos serviços', 'Base de calculo', 'Aliquota', 'Valor do ISS', 'STATUS']);
+    sheet.addRow([ "1", 'CONTAG ENGENHARIA LTDA',  "61.374.963/0001-40 ", "308", "147042", "01520", "São paulo", "São paulo", "35495.38",  "32.62", "815.62", "4", "DEFINIDO" ]);
+    sheet.addRow([ "2", 'CONTAG ENGENHARIA LTDA',  "61.374.963/0001-40 ", "308","147042", "01520", "Rio de janeiro", "Rio de janeiro", "35495.38",  "32.62", "815.62", "4", "DEFINIDO" ]);
+    sheet.addRow([ "3", 'CONTAG ENGENHARIA LTDA',  "61.374.963/0001-40 ", "308", "147042", "01520", "Rio grande do sul", "Rio grande do sul", "35495.38",  "32.62", "815.62", "4", "DEFINIDO" ]);
+ 
+    const secondRow = sheet.getRow(1);
+    secondRow.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: '74b9ff' }, // Cor amarela (FF para vermelho, FF para verde, 00 para azul)
+    };
+    secondRow.font = {
+      name: 'Arial', // Defina o nome da fonte
+      bold: true,   // Fonte em negrito
+      size: 12,     // Tamanho da fonte
+    };
+    secondRow.height = 30;
+
+
+    sheet.getColumn(1).width = 40;
+    sheet.getColumn(2).width = 40;
+    sheet.getColumn(3).width = 30;
+    sheet.getColumn(4).width = 30;
+    sheet.getColumn(5).width = 30;
+    sheet.getColumn(6).width = 30;
+    sheet.getColumn(7).width = 30;
+    sheet.getColumn(8).width = 30;
+    sheet.getColumn(9).width = 30;
+    sheet.getColumn(10).width = 30;
+    sheet.getColumn(11).width = 30;
+    sheet.getColumn(12).width = 40;
+
+    
+    // Salve a planilha
+    const buffer = await workbook.xlsx.writeBuffer();
+    
+    // Crie um link para o download
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'relatorio.xlsx';
+    a.click();
+  };
+
   if(props.active_item === "UserList") {
     return (
       <div className="page-header">
@@ -230,63 +282,91 @@ const PageHeader = (props) => {
       </div>
     )
   }
-  return (
-    <div className="page-header">
-      <div>
-        <h2 className="main-content-title tx-24 mg-b-5">{props.title}</h2>
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><a>{props.item}</a></li>
-          <li className="breadcrumb-item active" aria-current="page">{props.active_item}</li>
-        </ol>
-      </div>
-      <div className="d-flex">
-        <div className="justify-content-center">
-          <Fragment>
-            <div className="card-body text-center">
-                <Button className="btn ripple btn-primary btn-block" onClick={handleShow}>
-                    <i className="fe fe-download-cloud me-2"></i> Importar PDFs
-                </Button>
 
-                <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Adicionar arquivos PDFs</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <DropzoneAreaBase fileObjects={files}  
-                    maxFileSize={50000000} // Define o tamanho máximo do arquivo em bytes (neste exemplo, 5 MB)
-                    filesLimit={10}
-                    onAdd={handleAdd} onDelete={handleDelete} />
-                  </Modal.Body>
-                  <Modal.Footer>
-                    {
-                    loading ? 
-
-                    <Button variant="secondary" disabled>
-                      <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true"
-                      />
-                      Envio em andamento...
-                    </Button>
-
-                    :
-
-                    <Button variant="secondary" onClick={handleSubmit}>
-                     Processar PDF
-                    </Button>
-
-                    }
-
-
-                    <Button variant="primary" onClick={handleClose}>
-                      Cancelar
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-            </div>
-          </Fragment>
+  if(props.active_item === "Relatorio") {
+    return (
+      <div className="page-header">
+        <div>
+          <h2 className="main-content-title tx-24 mg-b-5">{props.title}</h2>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a>{props.item}</a></li>
+            <li className="breadcrumb-item active" aria-current="page">{props.active_item}</li>
+          </ol>
+        </div>
+        <div className="d-flex">
+          <div className="justify-content-center">
+            <Fragment>
+              <div className="card-body text-center">
+                  <Button onClick={()=> createExcel()} className="btn ripple btn-primary btn-block">
+                      <i className="fe fe-download-cloud me-2"></i> Download Relatorio
+                  </Button>
+              </div>
+            </Fragment>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+  if(props.active_item !== "UserList" && props.active_item !== "Relatorio"){
+    return (
+      <div className="page-header">
+        <div>
+          <h2 className="main-content-title tx-24 mg-b-5">{props.title}</h2>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item"><a>{props.item}</a></li>
+            <li className="breadcrumb-item active" aria-current="page">{props.active_item}</li>
+          </ol>
+        </div>
+        <div className="d-flex">
+          <div className="justify-content-center">
+            <Fragment>
+              <div className="card-body text-center">
+                  <Button className="btn ripple btn-primary btn-block" onClick={handleShow}>
+                      <i className="fe fe-download-cloud me-2"></i> Importar PDFs
+                  </Button>
+
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Adicionar arquivos PDFs</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <DropzoneAreaBase fileObjects={files}  
+                      maxFileSize={50000000} // Define o tamanho máximo do arquivo em bytes (neste exemplo, 5 MB)
+                      filesLimit={10}
+                      onAdd={handleAdd} onDelete={handleDelete} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      {
+                      loading ? 
+
+                      <Button variant="secondary" disabled>
+                        <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true"
+                        />
+                        Envio em andamento...
+                      </Button>
+
+                      :
+
+                      <Button variant="secondary" onClick={handleSubmit}>
+                      Processar PDF
+                      </Button>
+
+                      }
+
+
+                      <Button variant="primary" onClick={handleClose}>
+                        Cancelar
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+              </div>
+            </Fragment>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default PageHeader

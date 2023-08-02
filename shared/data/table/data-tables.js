@@ -152,42 +152,71 @@ export const tableDataItems = [
 ]
 
 export function Hoverdatatable() {
-
   const columns = [
     {
-      name: "S.NO",
+      name: "Nome do prestador",
       selector: row => [row.SNO],
       sortable: true
     },
     {
-      name: "NAME",
+      name: "CNPJ",
       selector: row => [row.NAME],
       sortable: true
     },
     {
-      name: "LAST NAME",
+      name: "Nr da NF",
       selector: row => [row.LASTNAME],
       sortable: true
     },
     {
-      name: "POSITION",
+      name: "Cod.Seviço",
       selector: row => [row.POSITION],
       sortable: true,
 
     },
     {
-      name: "DATE",
+      name: "Emissão da NF",
       selector: row => [row.DATE],
       sortable: true,
 
     },
     {
-      name: " SALARY",
+      name: " Mun.Emissão",
       selector: row => [row.SALARY],
       sortable: true
     },
     {
-      name: "EMAIL",
+      name: "Mun.Prestação",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "Valor dos serviços",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "Base de calculo",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "Mun.Prestação",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "Aliquota",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "Valor do ISS",
+      selector: row => [row.EMAIL],
+      sortable: true
+    },
+    {
+      name: "STATUS",
       selector: row => [row.EMAIL],
       sortable: true
     },
@@ -470,7 +499,7 @@ function convertArrayOfObjectsToCSV(array) {
   return result;
 }
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
-function downloadCSV(array) {
+export function downloadCSV(array) {
   const link = document.createElement('a');
   let csv = convertArrayOfObjectsToCSV(array);
   if (csv == null) return;
@@ -681,187 +710,114 @@ export const ExportCSV = () => {
   );
 };
 export const BasicDatatable = () => {
+
   const data = [
     {
-      id: "1",
-      SNO: 1,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "01/03/22",
-      SALARY: "$143,654",
-      EMAIL: "i.bond@datatables.net",
+        id: "1",
+        nome_prestacao: 'CONTAG ENGENHARIA LTDA',
+        cnpj: "61.374.963/0001-40 ",
+        nf: "147042",
+        cod_servico: "01520",
+        mun_emissao: "São paulo",
+        mun_prestacao: "São paulo",
+        valor_serivco: "35495.38",
+        base_calculo: "32.62",
+        aliquiota: "815.62",
+        valor_iss: "4",
+        status: "DEFINIDO",
     },
     {
       id: "2",
-      SNO: 2,
-      NAME: "Zonna",
-      LASTNAME: "Jond",
-      POSITION: "Accountant",
-      DATE: "02/06/22",
-      SALARY: "$343,654",
-      EMAIL: "a.bond@datatables.net",
-    },
-    {
-      id: "3",
-      SNO: 3,
-      NAME: "Nonna",
-      LASTNAME: "Tond",
-      POSITION: "Chief Executive Officer",
-      DATE: "06/04/22",
-      SALARY: "$743,654",
-      EMAIL: "s.bond@datatables.net",
-    },
-    {
-      id: "4",
-      SNO: 4,
-      NAME: "Bonna",
-      LASTNAME: "Oond",
-      POSITION: "Chief Operating Officer",
-      DATE: "08/04/22",
-      SALARY: "$643,654",
-      EMAIL: "w.bond@datatables.net",
-    },
-    {
-      id: "5",
-      SNO: 5,
-      NAME: "Honna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "12/04/22",
-      SALARY: "$243,654",
-      EMAIL: "e.bond@datatables.net",
-    },
-    {
-      id: "6",
-      SNO: 6,
-      NAME: "Fonna",
-      LASTNAME: "Nond",
-      POSITION: "Developer",
-      DATE: "14/04/22",
-      SALARY: "$543,654",
-      EMAIL: "r.bond@datatables.net",
-    },
-    {
-      id: "7",
-      SNO: 7,
-      NAME: "Aonna",
-      LASTNAME: "Xond",
-      POSITION: "Development lead",
-      DATE: "15/04/22",
-      SALARY: "$843,654",
-      EMAIL: "g.bond@datatables.net",
-    },
-    {
-      id: "8",
-      SNO: 8,
-      NAME: "Qonna",
-      LASTNAME: "Vond",
-      POSITION: "Director",
-      DATE: "18/04/22",
-      SALARY: "$743,654",
-      EMAIL: "x.bond@datatables.net",
-    },
-    {
-      id: "9",
-      SNO: 9,
-      NAME: "Jond",
-      LASTNAME: "Zonna",
-      POSITION: "Marketing Officer",
-      DATE: "20/04/22",
-      SALARY: "$543,654",
-      EMAIL: "k.bond@datatables.net",
-    },
-    {
-      id: "10",
-      SNO: 10,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "22/04/22",
-      SALARY: "$143,654",
-      EMAIL: "s.bond@datatables.net",
-    },
-    {
-      id: "11",
-      SNO: 11,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "24/04/22",
-      SALARY: "$143,654",
-      EMAIL: "b.bond@datatables.net",
-    },
-    {
-      id: "12",
-      SNO: 12,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "26/04/22",
-      SALARY: "$143,654",
-      EMAIL: "o.bond@datatables.net",
-    },
-    {
-      id: "13",
-      SNO: 13,
-      NAME: "Qonna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "28/04/22",
-      SALARY: "$243,654",
-      EMAIL: "q.bond@datatables.net",
-    },
-    {
-      id: "14",
-      SNO: 14,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "30/04/22",
-      SALARY: "$143,654",
-      EMAIL: "m.bond@datatables.net",
-    },
+      nome_prestacao: 'CONTAG ENGENHARIA LTDA',
+      cnpj: "61.374.963/0001-40 ",
+      nf: "147043",
+      cod_servico: "01519",
+      mun_emissao: "Rio de janeiro",
+      mun_prestacao: "Rio de janeiro",
+      valor_serivco: "25445.34",
+      base_calculo: "24.10",
+      aliquiota: "815.62",
+      valor_iss: "4",
+      status: "INDEFINIDO",
+  },
+  {
+    id: "3",
+    nome_prestacao: 'CONTAG ENGENHARIA LTDA',
+    cnpj: "61.374.963/0001-40 ",
+    nf: "147042",
+    cod_servico: "01520",
+    mun_emissao: "Rio grande do sul",
+    mun_prestacao: "Rio grande do sul",
+    valor_serivco: "45495.38",
+    base_calculo: "22.02",
+    aliquiota: "123.42",
+    valor_iss: "6",
+    status: "INDEFINIDO",
+},
+
   ]
+
+  
   const columns = [
     {
-      name: "S.NO",
-      selector: row => [row.SNO],
-      sortable: false
-    },
-    {
-      name: "NAME",
-      selector: row => [row.NAME],
+      name: "Nome do prestador",
+      selector: row => [row.nome_prestacao],
       sortable: true
     },
     {
-      name: "LAST NAME",
-      selector: row => [row.LASTNAME],
+      name: "CNPJ",
+      selector: row => [row.cnpj],
       sortable: true
     },
     {
-      name: "POSITION",
-      selector: row => [row.POSITION],
+      name: "Nr da NF",
+      selector: row => [row.nf],
+      sortable: true
+    },
+    {
+      name: "Cod.Seviço",
+      selector: row => [row.cod_servico],
       sortable: true,
 
     },
     {
-      name: "DATE",
-      selector: row => [row.DATE],
-      sortable: true,
+      name: " Mun.Emissão",
+      selector: row => [row.mun_emissao],
+      sortable: true
+    },
+    {
+      name: "Mun.Prestação",
+      selector: row => [row.mun_prestacao],
+      sortable: true
+    },
+    {
+      name: "Valor dos serviços",
+      selector: row => [row.valor_serivco],
+      sortable: true
+    },
+    {
+      name: "Base de calculo",
+      selector: row => [row.base_calculo],
+      sortable: true
+    },
+    {
+      name: "Aliquota",
+      selector: row => [row.aliquiota],
+      sortable: true
+    },
 
-    },
     {
-      name: " SALARY",
-      selector: row => [row.SALARY],
+      name: "Valor iss",
+      selector: row => [row.valor_iss],
       sortable: true
     },
     {
-      name: "EMAIL",
-      selector: row => [row.EMAIL],
+      name: "Status",
+      selector: row => [row.status],
       sortable: true
-    },
+    }
   ];
+  
   const tableDatas = {
     columns,
     data,

@@ -17,6 +17,14 @@ export const MENUITEMS = [
         active: false,
         selected: false,
         title: "Usuários",
+      },
+      {
+        path: "/components/dashboard/relatorios",
+        icon: "fe fe-eye",
+        type: "link",
+        active: false,
+        selected: false,
+        title: "Relatórios",
       }
     ],
   },
