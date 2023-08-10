@@ -41,6 +41,10 @@ body {
   font-family: "Roboto";
 }
 
+.filter-text{
+  display: none;
+}
+
 // scrollbar-container
 .scrollbar-container {
   overscroll-behavior-y: contain;

@@ -13,11 +13,13 @@ export function AuthProvider({children}){
     const [users_all, setUsers] =  useState(null)
     const [user, setUser] =  useState(null)
     const [uploads, setUploads] =  useState(null)
+    const [relatorios, setRelatorio] =  useState(null)
 
 
     useEffect(()=> {
         loadingStoreData()
         get_uploads_user()
+        loadingRelatorios()
     },[])
 
 
@@ -63,8 +65,22 @@ export function AuthProvider({children}){
                 console.log("Failed to")
             }
 
-      };
+    };
 
+    const loadingRelatorios  = async ()  => {
+        const { 'pdfreader.token':token } = parseCookies();
+
+            localStorage.setItem('token', token);
+            try {
+                const res = await fetch(`http://4.150.57.210:5000/user/relatoio`, { method: 'GET',  headers: {Authorization: `Bearer ${token}`} }) 
+                const data = await res.json()
+                console.log("user relatorio", data)
+                setRelatorio(data);
+            } catch {
+                console.log("Failed to")
+            }
+
+    };
 
 
       const get_uploads_user = async ()  => {
@@ -172,7 +188,7 @@ export function AuthProvider({children}){
     };
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, signIn, signUp, user, data, uploads, signOut, get_uploads_logs, get_uploads_user, loadingStoreData, get_alls_users_clients}}>
+        <AuthContext.Provider value={{isAuthenticated, loadingRelatorios, signIn, signUp, user, data, uploads, signOut, get_uploads_logs, get_uploads_user, relatorios, loadingStoreData, get_alls_users_clients}}>
             {children}
         </AuthContext.Provider>
     )

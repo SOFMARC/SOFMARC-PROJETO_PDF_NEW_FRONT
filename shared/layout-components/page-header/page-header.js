@@ -17,6 +17,8 @@ import { AuthContext } from '../../../context/AuthContext';
 import { cadastro_permission } from '../../../services/database';
 import useSWR from 'swr';
 import ExcelJS from 'exceljs';
+import {downloadCSV} from '../../data/table/data-tables'
+
 
 const PageHeader = (props, handle) => {
   const [show, setShow] = useState(false);
@@ -139,6 +141,9 @@ const PageHeader = (props, handle) => {
 
 
   const createExcel = async () => {
+
+    downloadCSV()
+
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet('Sheet 1');
     
@@ -187,6 +192,9 @@ const PageHeader = (props, handle) => {
     a.download = 'relatorio.xlsx';
     a.click();
   };
+
+
+  
 
   if(props.active_item === "UserList") {
     return (
@@ -303,6 +311,7 @@ const PageHeader = (props, handle) => {
               </div>
             </Fragment>
           </div>
+
         </div>
       </div>
     )

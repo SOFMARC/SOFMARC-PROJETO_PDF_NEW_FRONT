@@ -9,13 +9,14 @@ const Datatable = () => {
 				<Card className="custom-card overflow-hidden">
 					<Card.Body>
 						<div>
-							<h6 className="main-content-label mb-1">BasicData</h6>
+							<h5 className="main-content-label mb-1">RELÁTÓRIOS DAS EXTRAÇÕES</h5>
 							<p className="text-muted card-sub-title">
-								A simple example with no frills.
+								Gere relatórios completos das informações extraidas
 							</p>
 						</div>
+						
 						<div className="responsive">
-							<BasicDatatable />
+							<ExportCSV />
 						</div>
 					</Card.Body>
 				</Card>

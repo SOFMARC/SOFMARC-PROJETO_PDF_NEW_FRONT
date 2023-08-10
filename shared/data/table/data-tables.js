@@ -1,395 +1,12 @@
-import React from "react";
+import React,{useContext, useState, useEffect} from "react";
 import DataTable from "react-data-table-component";
-// import DataTableExtensions from "react-data-table-component-extensions";
-const DataTableExtensions = dynamic(() => import('react-data-table-component-extensions'), { ssr: false });
-
+const DataTableExtensions = dynamic(() => import('react-data-table-component-extensions'), { ssr: true });
 import differenceBy from 'lodash/differenceBy';
-// import { tableDataItems } from ""
 import { Button } from "react-bootstrap";
 import "react-data-table-component-extensions/dist/index.css";
 import dynamic from "next/dynamic";
-export const tableDataItems = [
-  {
-      id: "1",
-      SNO: 1,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "2012/02/21",
-      SALARY: "$143,654",
-      EMAIL: "i.bond@datatables.net",
-  },
-  {
-      id: "2",
-      SNO: 2,
-      NAME: "Zonna",
-      LASTNAME: "Jond",
-      POSITION: "Accountant",
-      DATE: "2012/02/21",
-      SALARY: "$343,654",
-      EMAIL: "a.bond@datatables.net",
-  },
-  {
-      id: "3",
-      SNO: 3,
-      NAME: "Nonna",
-      LASTNAME: "Tond",
-      POSITION: "Chief Executive Officer",
-      DATE: "2012/02/21",
-      SALARY: "$743,654",
-      EMAIL: "s.bond@datatables.net",
-  },
-  {
-      id: "4",
-      SNO: 4,
-      NAME: "Bonna",
-      LASTNAME: "Oond",
-      POSITION: "Chief Operating Officer",
-      DATE: "2012/02/21",
-      SALARY: "$643,654",
-      EMAIL: "w.bond@datatables.net",
-  },
-  {
-      id: "5",
-      SNO: 5,
-      NAME: "Honna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "2012/02/21",
-      SALARY: "$243,654",
-      EMAIL: "e.bond@datatables.net",
-  },
-  {
-      id: "6",
-      SNO: 6,
-      NAME: "Fonna",
-      LASTNAME: "Nond",
-      POSITION: "Developer",
-      DATE: "2012/02/21",
-      SALARY: "$543,654",
-      EMAIL: "r.bond@datatables.net",
-  },
-  {
-      id: "7",
-      SNO: 7,
-      NAME: "Aonna",
-      LASTNAME: "Xond",
-      POSITION: "Development lead",
-      DATE: "2012/02/21",
-      SALARY: "$843,654",
-      EMAIL: "g.bond@datatables.net",
-  },
-  {
-      id: "8",
-      SNO: 8,
-      NAME: "Qonna",
-      LASTNAME: "Vond",
-      POSITION: "Director",
-      DATE: "2012/02/21",
-      SALARY: "$743,654",
-      EMAIL: "x.bond@datatables.net",
-  },
-  {
-      id: "9",
-      SNO: 9,
-      NAME: "Jond",
-      LASTNAME: "Zonna",
-      POSITION: "Marketing Officer",
-      DATE: "2012/02/21",
-      SALARY: "$543,654",
-      EMAIL: "k.bond@datatables.net",
-  },
-  {
-      id: "10",
-      SNO: 10,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "2012/02/21",
-      SALARY: "$143,654",
-      EMAIL: "s.bond@datatables.net",
-  },
-  {
-      id: "11",
-      SNO: 11,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "2012/02/21",
-      SALARY: "$143,654",
-      EMAIL: "b.bond@datatables.net",
-  },
-  {
-      id: "12",
-      SNO: 12,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "2012/02/21",
-      SALARY: "$143,654",
-      EMAIL: "o.bond@datatables.net",
-  },
-  {
-      id: "13",
-      SNO: 13,
-      NAME: "Qonna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "2012/02/21",
-      SALARY: "$243,654",
-      EMAIL: "q.bond@datatables.net",
-  },
-  {
-      id: "14",
-      SNO: 14,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "2012/02/21",
-      SALARY: "$143,654",
-      EMAIL: "m.bond@datatables.net",
-  },
-]
+import { AuthContext } from '../../../context/AuthContext';
 
-export function Hoverdatatable() {
-  const columns = [
-    {
-      name: "Nome do prestador",
-      selector: row => [row.SNO],
-      sortable: true
-    },
-    {
-      name: "CNPJ",
-      selector: row => [row.NAME],
-      sortable: true
-    },
-    {
-      name: "Nr da NF",
-      selector: row => [row.LASTNAME],
-      sortable: true
-    },
-    {
-      name: "Cod.Seviço",
-      selector: row => [row.POSITION],
-      sortable: true,
-
-    },
-    {
-      name: "Emissão da NF",
-      selector: row => [row.DATE],
-      sortable: true,
-
-    },
-    {
-      name: " Mun.Emissão",
-      selector: row => [row.SALARY],
-      sortable: true
-    },
-    {
-      name: "Mun.Prestação",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "Valor dos serviços",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "Base de calculo",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "Mun.Prestação",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "Aliquota",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "Valor do ISS",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-    {
-      name: "STATUS",
-      selector: row => [row.EMAIL],
-      sortable: true
-    },
-  ];
-  const data = [
-    {
-      id: "1",
-      SNO: 1,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "04/02/22",
-      SALARY: "$143,654",
-      EMAIL: "i.bond@datatables.net",
-    },
-    {
-      id: "2",
-      SNO: 2,
-      NAME: "Zonna",
-      LASTNAME: "Jond",
-      POSITION: "Accountant",
-      DATE: "08/02/22",
-      SALARY: "$343,654",
-      EMAIL: "a.bond@datatables.net",
-    },
-    {
-      id: "3",
-      SNO: 3,
-      NAME: "Nonna",
-      LASTNAME: "Tond",
-      POSITION: "Chief Executive Officer",
-      DATE: "12/02/22",
-      SALARY: "$743,654",
-      EMAIL: "s.bond@datatables.net",
-    },
-    {
-      id: "4",
-      SNO: 4,
-      NAME: "Bonna",
-      LASTNAME: "Oond",
-      POSITION: "Chief Operating Officer",
-      DATE: "15/02/22",
-      SALARY: "$643,654",
-      EMAIL: "w.bond@datatables.net",
-    },
-    {
-      id: "5",
-      SNO: 5,
-      NAME: "Honna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "16/02/22",
-      SALARY: "$243,654",
-      EMAIL: "e.bond@datatables.net",
-    },
-    {
-      id: "6",
-      SNO: 6,
-      NAME: "Fonna",
-      LASTNAME: "Nond",
-      POSITION: "Developer",
-      DATE: "22/02/22",
-      SALARY: "$543,654",
-      EMAIL: "r.bond@datatables.net",
-    },
-    {
-      id: "7",
-      SNO: 7,
-      NAME: "Aonna",
-      LASTNAME: "Xond",
-      POSITION: "Development lead",
-      DATE: "24/02/22",
-      SALARY: "$843,654",
-      EMAIL: "g.bond@datatables.net",
-    },
-    {
-      id: "8",
-      SNO: 8,
-      NAME: "Qonna",
-      LASTNAME: "Vond",
-      POSITION: "Director",
-      DATE: "25/02/22",
-      SALARY: "$743,654",
-      EMAIL: "x.bond@datatables.net",
-    },
-    {
-      id: "9",
-      SNO: 9,
-      NAME: "Jond",
-      LASTNAME: "Zonna",
-      POSITION: "Marketing Officer",
-      DATE: "29/02/22",
-      SALARY: "$543,654",
-      EMAIL: "k.bond@datatables.net",
-    },
-    {
-      id: "10",
-      SNO: 10,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "30/02/22",
-      SALARY: "$143,654",
-      EMAIL: "s.bond@datatables.net",
-    },
-    {
-      id: "11",
-      SNO: 11,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "02/03/22",
-      SALARY: "$143,654",
-      EMAIL: "b.bond@datatables.net",
-    },
-    {
-      id: "12",
-      SNO: 12,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "05/04/22",
-      SALARY: "$143,654",
-      EMAIL: "o.bond@datatables.net",
-    },
-    {
-      id: "13",
-      SNO: 13,
-      NAME: "Qonna",
-      LASTNAME: "Pond",
-      POSITION: "Data Coordinator",
-      DATE: "09/03/22",
-      SALARY: "$243,654",
-      EMAIL: "q.bond@datatables.net",
-    },
-    {
-      id: "14",
-      SNO: 14,
-      NAME: "Yonna",
-      LASTNAME: "Qond",
-      POSITION: "Financial Controller",
-      DATE: "11/03/22",
-      SALARY: "$143,654",
-      EMAIL: "m.bond@datatables.net",
-    },
-  ]
-
-
-  const tableData = {
-    columns,
-    data,
-  };
-
-  return (
-    <div className="table">
-      <DataTableExtensions {...tableData} >
-        <DataTable
-          title="Desserts"
-          columns={columns}
-          data={data}
-          noHeader
-          defaultSortField="id"
-          defaultSortAsc={false}
-          striped={true}
-          center={true}
-          persistTableHead
-          pagination
-          highlightOnHover
-        />
-      </DataTableExtensions>
-    </div>
-  );
-}
 export const DataTables = () => {
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [toggleCleared, setToggleCleared] = React.useState(false);
@@ -473,12 +90,16 @@ export const DataTables = () => {
     </DataTableExtensions>
   );
 }
+
 function convertArrayOfObjectsToCSV(array) {
+
+  console.log("meus dados download", array)
   let result;
+
 
   const columnDelimiter = ',';
   const lineDelimiter = '\n';
-  const keys = Object.keys(data[0]);
+  const keys = Object.keys(array[0]);
 
   result = '';
   result += keys.join(columnDelimiter);
@@ -500,6 +121,9 @@ function convertArrayOfObjectsToCSV(array) {
 }
 // Blatant "inspiration" from https://codepen.io/Jacqueline34/pen/pyVoWr
 export function downloadCSV(array) {
+
+  console.log("cheguei", array)
+
   const link = document.createElement('a');
   let csv = convertArrayOfObjectsToCSV(array);
   if (csv == null) return;
@@ -514,269 +138,42 @@ export function downloadCSV(array) {
   link.setAttribute('download', filename);
   link.click();
 }
-const Export = ({ onExport }) => <Button onClick={e => onExport(e.target.value)}>Export</Button>;
-const data = [
-  {
-    id: "1",
-    SNO: 1,
-    NAME: "Yonna",
-    LASTNAME: "Qond",
-    POSITION: "Financial Controller",
-    DATE: "15/05/22",
-    SALARY: "$143,654",
-    EMAIL: "i.bond@datatables.net",
-  },
-  {
-    id: "2",
-    SNO: 2,
-    NAME: "Zonna",
-    LASTNAME: "Jond",
-    POSITION: "Accountant",
-    DATE: "18/05/22",
-    SALARY: "$343,654",
-    EMAIL: "a.bond@datatables.net",
-  },
-  {
-    id: "3",
-    SNO: 3,
-    NAME: "Nonna",
-    LASTNAME: "Tond",
-    POSITION: "Chief Executive Officer",
-    DATE: "18/05/22",
-    SALARY: "$743,654",
-    EMAIL: "s.bond@datatables.net",
-  },
-  {
-    id: "4",
-    SNO: 4,
-    NAME: "Bonna",
-    LASTNAME: "Oond",
-    POSITION: "Chief Operating Officer",
-    DATE: "20/05/22",
-    SALARY: "$643,654",
-    EMAIL: "w.bond@datatables.net",
-  },
-  {
-    id: "5",
-    SNO: 5,
-    NAME: "Honna",
-    LASTNAME: "Pond",
-    POSITION: "Data Coordinator",
-    DATE: "22/05/22",
-    SALARY: "$243,654",
-    EMAIL: "e.bond@datatables.net",
-  },
-  {
-    id: "6",
-    SNO: 6,
-    NAME: "Fonna",
-    LASTNAME: "Nond",
-    POSITION: "Developer",
-    DATE: "24/05/22",
-    SALARY: "$543,654",
-    EMAIL: "r.bond@datatables.net",
-  },
-  {
-    id: "7",
-    SNO: 7,
-    NAME: "Aonna",
-    LASTNAME: "Xond",
-    POSITION: "Development lead",
-    DATE: "26/05/22",
-    SALARY: "$843,654",
-    EMAIL: "g.bond@datatables.net",
-  },
-  {
-    id: "8",
-    SNO: 8,
-    NAME: "Qonna",
-    LASTNAME: "Vond",
-    POSITION: "Director",
-    DATE: "28/05/22",
-    SALARY: "$743,654",
-    EMAIL: "x.bond@datatables.net",
-  },
-  {
-    id: "9",
-    SNO: 9,
-    NAME: "Jond",
-    LASTNAME: "Zonna",
-    POSITION: "Marketing Officer",
-    DATE: "29/05/22",
-    SALARY: "$543,654",
-    EMAIL: "k.bond@datatables.net",
-  },
-  {
-    id: "10",
-    SNO: 10,
-    NAME: "Yonna",
-    LASTNAME: "Qond",
-    POSITION: "Financial Controller",
-    DATE: "01/06/22",
-    SALARY: "$143,654",
-    EMAIL: "s.bond@datatables.net",
-  },
-  {
-    id: "11",
-    SNO: 11,
-    NAME: "Yonna",
-    LASTNAME: "Qond",
-    POSITION: "Financial Controller",
-    DATE: "02/06/22",
-    SALARY: "$143,654",
-    EMAIL: "b.bond@datatables.net",
-  },
-  {
-    id: "12",
-    SNO: 12,
-    NAME: "Yonna",
-    LASTNAME: "Qond",
-    POSITION: "Financial Controller",
-    DATE: "05/06/22",
-    SALARY: "$143,654",
-    EMAIL: "o.bond@datatables.net",
-  },
-  {
-    id: "13",
-    SNO: 13,
-    NAME: "Qonna",
-    LASTNAME: "Pond",
-    POSITION: "Data Coordinator",
-    DATE: "08/06/22",
-    SALARY: "$243,654",
-    EMAIL: "q.bond@datatables.net",
-  },
-  {
-    id: "14",
-    SNO: 14,
-    NAME: "Yonna",
-    LASTNAME: "Qond",
-    POSITION: "Financial Controller",
-    DATE: "11/06/22",
-    SALARY: "$143,654",
-    EMAIL: "m.bond@datatables.net",
-  },
-]
-const columns = [
-  {
-    name: "S.NO",
-    selector: row => [row.SNO],
-    sortable: true
-  },
-  {
-    name: "NAME",
-    selector: row => [row.NAME],
-    sortable: true
-  },
-  {
-    name: "LAST NAME",
-    selector: row => [row.LASTNAME],
-    sortable: true
-  },
-  {
-    name: "POSITION",
-    selector: row => [row.POSITION],
-    sortable: true,
+const Export = ({ onExport }) => <Button onClick={e => onExport(e.target.value)}>Download Relatório</Button>;
 
-  },
-  {
-    name: "DATE",
-    selector: row => [row.DATE],
-    sortable: true,
-
-  },
-  {
-    name: " SALARY",
-    selector: row => [row.SALARY],
-    sortable: true
-  },
-  {
-    name: "EMAIL",
-    selector: row => [row.EMAIL],
-    sortable: true
-  },
-];
-const tableDatas = {
-  columns,
-  data,
-};
 export const ExportCSV = () => {
-  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, []);
+  const { relatorios, loadingRelatorios } = useContext(AuthContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [inputError, setInputError] = useState(false);
 
-  return (
-    <DataTableExtensions {...tableDatas} >
-      <DataTable columns={columns} data={data} actions={actionsMemo} pagination />
-    </DataTableExtensions>
-  );
-};
-export const BasicDatatable = () => {
 
-  const data = [
-    {
-        id: "1",
-        nome_prestacao: 'CONTAG ENGENHARIA LTDA',
-        cnpj: "61.374.963/0001-40 ",
-        nf: "147042",
-        cod_servico: "01520",
-        mun_emissao: "São paulo",
-        mun_prestacao: "São paulo",
-        valor_serivco: "35495.38",
-        base_calculo: "32.62",
-        aliquiota: "815.62",
-        valor_iss: "4",
-        status: "DEFINIDO",
-    },
-    {
-      id: "2",
-      nome_prestacao: 'CONTAG ENGENHARIA LTDA',
-      cnpj: "61.374.963/0001-40 ",
-      nf: "147043",
-      cod_servico: "01519",
-      mun_emissao: "Rio de janeiro",
-      mun_prestacao: "Rio de janeiro",
-      valor_serivco: "25445.34",
-      base_calculo: "24.10",
-      aliquiota: "815.62",
-      valor_iss: "4",
-      status: "INDEFINIDO",
-  },
-  {
-    id: "3",
-    nome_prestacao: 'CONTAG ENGENHARIA LTDA',
-    cnpj: "61.374.963/0001-40 ",
-    nf: "147042",
-    cod_servico: "01520",
-    mun_emissao: "Rio grande do sul",
-    mun_prestacao: "Rio grande do sul",
-    valor_serivco: "45495.38",
-    base_calculo: "22.02",
-    aliquiota: "123.42",
-    valor_iss: "6",
-    status: "INDEFINIDO",
-},
+  useEffect(() =>{
+    loadingRelatorios()
+  },[])
 
-  ]
 
-  
+  console.log("relatorios", relatorios?.relatorio);
+
+  const data = relatorios?.relatorio;
   const columns = [
     {
       name: "Nome do prestador",
-      selector: row => [row.nome_prestacao],
+      selector: row => [row.razao_prestador],
       sortable: true
     },
     {
       name: "CNPJ",
-      selector: row => [row.cnpj],
+      selector: row => [row.cnpj_prestador],
       sortable: true
     },
     {
       name: "Nr da NF",
-      selector: row => [row.nf],
+      selector: row => [row.nim_nota_fiscal],
       sortable: true
     },
     {
       name: "Cod.Seviço",
-      selector: row => [row.cod_servico],
+      selector: row => [row.codigo_servico],
       sortable: true,
 
     },
@@ -792,17 +189,17 @@ export const BasicDatatable = () => {
     },
     {
       name: "Valor dos serviços",
-      selector: row => [row.valor_serivco],
+      selector: row => [row.valor_total_nota],
       sortable: true
     },
     {
       name: "Base de calculo",
-      selector: row => [row.base_calculo],
+      selector: row => [row.base_de_calculo],
       sortable: true
     },
     {
       name: "Aliquota",
-      selector: row => [row.aliquiota],
+      selector: row => [row.aliquota],
       sortable: true
     },
 
@@ -817,19 +214,128 @@ export const BasicDatatable = () => {
       sortable: true
     }
   ];
+
+  const regexNomePrestador = new RegExp(searchTerm, 'i');
+  const regexCNPJ = /^\d{14}$/;
+
+  const handleSearchChange = e => {
+    const value = e.target.value;
+ 
+    if (
+      (selectedFilter === 'nome' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'cnpj' && regexCNPJ.test(value)) ||
+      (selectedFilter === 'nota' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'cod' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'emissao' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'prestacao' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'serviços' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'calculo' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'aliquotata' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'iss' && regexNomePrestador.test(value)) ||
+      (selectedFilter === 'status' && regexNomePrestador.test(value)) ||
+      value === ''
+    ) {
+      setInputError(false);
+    } else {
+      setInputError(true);
+    }
+
+    setSearchTerm(value);
+  };
+
+  const filteredData = data?.filter(item => {
+    if (selectedFilter === 'nome') {
+      return item.razao_prestador?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'cnpj') {
+      return item.cnpj_prestador?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'nota') {
+      return item.nim_nota_fiscal?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'cod') {
+      return item.codigo_servico?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'emissao') {
+      return item.mun_emissao?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'prestacao') {
+      return item.mun_prestacao?.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'serviços') {
+      return item.valor_total_nota?.includes(searchTerm.toLowerCase());
+    } else if (selectedFilter === 'calculo') {
+      if (typeof item.base_de_calculo === 'string') {
+        return item.base_de_calculo.includes(searchTerm);
+      } else if (item.base_de_calculo !== undefined) {
+        return item.base_de_calculo.includes(searchTerm);
+      }
+      return false; // Handle the case where item.aliquota is undefined
+    }else if (selectedFilter === 'aliquota') {
+      if (typeof item.aliquota === 'string') {
+        return item.aliquota.includes(searchTerm);
+      } else if (item.aliquota !== undefined) {
+        return item.aliquota.toString().includes(searchTerm);
+      }
+      return false; // Handle the case where item.aliquota is undefined
+    }
+     else if (selectedFilter === 'status') {
+      return item.status?.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+    
+    // Handle other filters or return false if no filter matches
+    return true;
+    
+  });
+
   
+
+    console.log("fitlros", filteredData);
+
+
+
   const tableDatas = {
     columns,
-    data,
+    data: filteredData,
   };
-  return (
-    <DataTableExtensions {...tableDatas} >
-      <DataTable
 
-        columns={columns}
-        data={data}
-        pagination
-      />
-    </DataTableExtensions>
-  )
-}
+  const actionsMemo = <Export onExport={() => downloadCSV(filteredData)} />
+
+  return (
+    <div>
+
+      <div style={{display: 'flex', alignItems: 'center'}}>
+        <div className="filter-dropdown" style={{width: '20vw'}}>
+          <select
+            value={selectedFilter}
+            style={{width: '100%'}}
+            className="p-1 w-[75px] btn ripple btn-primary"
+            onChange={e => setSelectedFilter(e.target.value)}
+          >
+            <option style={{height: 30}} value="">Filtrar por:</option>
+            <option style={{height: 30}} value="nome">Nome do Prestador</option> 
+            <option style={{height: 30}} value="cnpj">CNPJ</option>
+            <option style={{height: 30}} value="nota">Nr da NF</option>
+            <option style={{height: 30}} value="cod">Cod. Serviço</option>
+            <option style={{height: 30}} value="emissao">Mun.Emissão</option>
+            <option style={{height: 30}} value="prestacao">Mun.Prestação</option>
+            <option style={{height: 30}} value="serviços">Valor dos serviços</option>
+            <option style={{height: 30}} value="calculo">Base de calculo</option>
+            <option style={{height: 30}} value="aliquota">Aliquota</option>
+            <option style={{height: 30}} value="iss">Valor iss</option>
+            <option style={{height: 30}} value="status">Status</option>
+
+
+          </select>
+          </div>
+          <div style={{width:'32vw'}}>
+            <input
+              style={inputError ? {marginLeft: 10, background: 'transparent', border: '1px solid #ccc', borderRadius: 4, padding: 8, width: '100%', border: '3px solid #ccc'} : {marginLeft: 10, background: 'transparent', border: '1px solid #ccc', borderRadius: 4, padding: 8, width: '100%'}}
+              type="text"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+        </div>
+      </div>
+
+      <DataTableExtensions {...tableDatas}>
+        <DataTable columns={columns} data={filteredData} actions={actionsMemo} pagination  />
+      </DataTableExtensions>
+    </div>
+  );
+};
